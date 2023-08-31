@@ -43,6 +43,8 @@ Now we're ready to start coding!
 
 We will create 4 components for the form: `FieldBase`, `SliderField`, `TextField`, `DropdownField`. The latter 3 will extend from first one, so let's start with it!
 
+### FieldBase
+
 The `FieldBase` component will be used to reuse parts that are common across all field components, such as the label or the field layout.
 
 First, create a `components` folder at the root of your project. In this directory we will hold all of our components.
@@ -52,14 +54,12 @@ Next, in the newly created folder, create a file `FieldBase.tsx`, or `FieldBase.
     import { PropsWithChildren } from 'react'
     import { View } from 'react-native'
 
-    type FieldBaseProps = {
-        label: string,
-        name: string
+    export type FieldBaseProps = {
+        label: string
     }
 
-    export default function FieldBase( { 
-        label, 
-        name,
+    export default function FieldBase({ 
+        label,
         children
     }: PropsWithChildren<FieldBaseProps>) {
         return (
@@ -71,19 +71,19 @@ Next, in the newly created folder, create a file `FieldBase.tsx`, or `FieldBase.
 
 This is the basic `FieldBase` component. Currently all it can do is act as a wrapper for its children `PropsWithChildren` is a function that allows you to use the `children` prop in your component (you don't need this if you're using Javascript). The function accepts a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) that should be the type of your props.
 
+You may have noticed that we're also exporting `FieldBaseProps`. This is so that we can reuse this type in our other components.
+
 Next, let's add some styles and have our component show a label.
 
     import { PropsWithChildren } from 'react'
     import { StyleSheet, View, Text } from 'react-native'
 
-    type FieldBaseProps = {
-        label: string,
-        name: string
+    export type FieldBaseProps = {
+        label: string
     }
 
-    export default function FieldBase( { 
-        label, 
-        name,
+    export default function FieldBase({ 
+        label,
         children
     }: PropsWithChildren<FieldBaseProps>) {
         return (
@@ -116,7 +116,83 @@ At this point, if you use this component somewhere in your app's code, like so:
 
     <FieldBase
         label='My field'
-        name='my-field'
       >
         <Text>Field input will be here</Text>
     </FieldBase>
+
+You should see something like this:
+
+![](images/field-base-1.png)
+
+Awesome! So this will be the base of our fields that we will extend from. The purpose and advantage of creating such a 'base' component is that you can reuse code and avoid duplicating code.
+
+Next up is `TextField`.
+
+### InputField
+
+In the `components` folder, create a file called `TextField.tsx`:
+
+    import FieldBase, { FieldBaseProps} from './FieldBase';
+
+    type TextFieldProps = FieldBaseProps & {
+        name: string
+    }
+
+    export default function TextField({ 
+        name, 
+        label 
+    }: TextFieldProps) {
+        return (
+            <FieldBase
+                name={name}
+                label={label}
+            >
+
+            </FieldBase>
+        )
+    }
+
+As you can see we've used the `FieldBase` in our new component. This allows us to specify a label and show it without needing to rewrite the code for it. Right now the component can't do anything, so let's go ahead and introduce a `TextInput` component to it!
+
+    import { TextInput, StyleSheet } from 'react-native'
+    import FieldBase, { FieldBaseProps} from './FieldBase';
+
+    type TextFieldProps = FieldBaseProps & {
+        name: string
+    }
+
+    export default function TextField({
+        name,
+        label,
+    }: TextFieldFieldProps) {
+        return (
+            <FieldBase
+                label={label}
+            >
+                <TextInput
+                    style={styles.input}
+                />
+            </FieldBase>
+        )
+    }
+
+    const styles = StyleSheet.create({
+        input: {
+            height: 32,
+            width: 200,
+            borderWidth: 1,
+            borderColor: '#a8a8a8'
+        }
+    })
+
+As you can see we've added a new component - `TextInput` - [TextInput](https://reactnative.dev/docs/textinput) is a native React Native component. Also we have applied some basic style to the input.
+
+So far so good!
+
+Right now if we added the `TextField` to our app, it would look like this: 
+
+![](/images/text-field-1.PNG)
+
+You can try entering some text into it to see that it works!
+
+If we added it to a Formik form though, at this point it wouldn't work - no data would be submitted. We have to integrate our component with Formik.

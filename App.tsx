@@ -1,16 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import FieldBase from './components/FieldBase';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import TextField from './components/TextField';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <FieldBase
-        label='My field'
-        name='my-field'
-      >
-        <Text>Field input will be here</Text>
-      </FieldBase>
+      <TextField
+        label='Username'
+        name='username'
+      />
     </View>
   );
 }

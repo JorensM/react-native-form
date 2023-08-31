@@ -1,14 +1,12 @@
 import { PropsWithChildren } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
-type FieldBaseProps = {
-    label: string,
-    name: string
+export type FieldBaseProps = {
+    label: string
 }
 
 export default function FieldBase( { 
     label, 
-    name,
     children
 }: PropsWithChildren<FieldBaseProps>) {
     return (
