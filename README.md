@@ -74,7 +74,7 @@ Next, in the newly created folder, create a file `FieldBase.tsx`, or `FieldBase.
         )
     }
 
-This is the basic `FieldBase` component. Currently all it can do is act as a wrapper for its children `PropsWithChildren` is a function that allows you to use the `children` prop in your component (you don't need this if you're using Javascript). The function accepts a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) that should be the type of your props.
+This is the basic `FieldBase` component. Currently all it can do is act as a wrapper for its children. `PropsWithChildren` is a function that allows you to use the `children` prop in your component (you don't need this if you're using Javascript). The function accepts a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) that should be the type of your props.
 
 You may have noticed that we're also exporting `FieldBaseProps`. This is so that we can reuse this type in our other components.
 
