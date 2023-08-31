@@ -6,7 +6,7 @@ Forms are an integral part of many mobile applications. Whether it's a sign-up/s
 
 What is a form? You probably already know what a form is, but let me give you a definition anyway. In software, a form is a UI element that allows you to fill out data fields and then store this data or send this data to the software's servers. Forms allow the user to provide information to the app to create new content or to tailor the app experience to the user's preferences, among many other things.
 
-Do you want to create a form in your React Native app but don't know how? Then this post is for you! In this post I will teach you how to create forms using a library called [Formik](https://formik.org) , as well as how to integrate non-native form components with Formik, while also keeping accessibility in mind. Additionally you will learn how to validate forms using [Yup](https://github.com/jquense/yup) (which Formik supports out of the box)
+Do you want to create a form in your React Native app but don't know how? Then this post is for you! In this post I will teach you how to create forms using a library called [Formik](https://formik.org) , as well as how to integrate non-native form components with Formik. Additionally you will learn how to validate forms using [Yup](https://github.com/jquense/yup) (which Formik supports out of the box)
 
 ## Table of contents
 
@@ -15,7 +15,6 @@ Do you want to create a form in your React Native app but don't know how? Then t
   3. Building the components
   4. Building the form
   5. Adding validation
-  5. Adding accessibility
   6. Improving our code - pass props down
 
 ## Setup
