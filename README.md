@@ -74,7 +74,7 @@ Next, in the newly created folder, create a file `FieldBase.tsx`, or `FieldBase.
         )
     }
 
-This is the basic `FieldBase` component. Currently all it can do is act as a wrapper for its children. `PropsWithChildren` is a function that allows you to use the `children` prop in your component (you don't need this if you're using Javascript). The function accepts a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) that should be the type of your props.
+This is the basic `FieldBase` component. Currently all it can do is act as a wrapper for its children. `PropsWithChildren` is a function that allows you to use the `children` prop in your component (you don't to use this function if you're using Javascript). The function accepts a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) that should be the type of your props.
 
 You may have noticed that we're also exporting `FieldBaseProps`. This is so that we can reuse this type in our other components.
 
@@ -324,7 +324,7 @@ In the `components` folder, create a file `SliderField.tsx`:
 
         const [ value, meta, helpers ] = useField(name)
 
-        const handleChange = (new_value: number | number[]) => {
+        const handleChange = (new_value: number[]) => {
             helpers.setValue(new_value)
         }
 
@@ -352,8 +352,6 @@ In the `components` folder, create a file `SliderField.tsx`:
     })
 
 As you can see once again, the process is nearly identical - just update Formik's value when the input's value changes.
-
-You may have noticed that I have the types `number | number[]` for the `handleChange()` function. This is because the slider component can return a single number and also an array of numbers if you're using the range feature(we're not using it but we still have to specify the type)
 
 Okay, now that we've created our components, let's create a Formik form and hook them up!
 
