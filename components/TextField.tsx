@@ -2,14 +2,14 @@ import { useField } from 'formik';
 import { TextInput, StyleSheet } from 'react-native'
 import FieldBase, { FieldBaseProps} from './FieldBase';
 
-type InputFieldProps = FieldBaseProps & {
+type TextFieldProps = FieldBaseProps & {
     name: string
 }
 
 export default function TextField({ 
     label,
     name
-}: InputFieldProps) {
+}: TextFieldProps) {
 
     const [ value, meta, helpers ] = useField(name)
 
@@ -20,6 +20,7 @@ export default function TextField({
     return (
         <FieldBase
             label={label}
+            name={name}
         >
             <TextInput
                 style={styles.input}
