@@ -17,6 +17,8 @@ Do you want to create a form in your React Native app but don't know how? Then t
   5. Adding validation
   6. Improving our code - pass props down
 
+[Source code for this project](https://github.com/JorensM/react-native-form)
+
 ## Setup
 
 Before we begin working on our project, we must set it up and install all the necessary dependencies. We will be using [Expo](https://docs.expo.dev/) for this project. Expo is a React Native management tool that handles a lot of heavy stuff for us, such as efficiently compiling code and assets, as well as provides us with a productive development environment. Also we will be using Typescript for this project, but don't worry, the process is practically identical to Javascript, so if you don't know Typescript that's fine. This article assumes some basic understanding of [React](https://react.dev/) and [React Native](https://reactnative.dev/) , such as components, hooks and state. You must also have Node.js installed on your computer.
@@ -52,6 +54,8 @@ First, create a `components` folder at the root of your project. In this directo
 
 Next, in the newly created folder, create a file `FieldBase.tsx`, or `FieldBase.jsx` if you're using plain Javascript (from now on assume that all `.tsx` files should be `.jsx` if you're using JS):
 
+`FieldBase.tsx` :
+
     import { PropsWithChildren } from 'react'
     import { View } from 'react-native'
 
@@ -75,6 +79,8 @@ This is the basic `FieldBase` component. Currently all it can do is act as a wra
 You may have noticed that we're also exporting `FieldBaseProps`. This is so that we can reuse this type in our other components.
 
 Next, let's add some styles and have our component show a label.
+
+`FieldBase.tsx` :
 
     import { PropsWithChildren } from 'react'
     import { StyleSheet, View, Text } from 'react-native'
@@ -133,6 +139,8 @@ Next up is `TextField`.
 
 In the `components` folder, create a file called `TextField.tsx`:
 
+`TextField.tsx` :
+
     import FieldBase, { FieldBaseProps} from './FieldBase';
 
     type TextFieldProps = FieldBaseProps & {
@@ -154,6 +162,8 @@ In the `components` folder, create a file called `TextField.tsx`:
     }
 
 As you can see we've used the `FieldBase` in our new component. This allows us to specify a label and show it without needing to rewrite the code for it. Right now the component can't do anything, so let's go ahead and introduce a `TextInput` component to it!
+
+`TextField.tsx` :
 
     import { TextInput, StyleSheet } from 'react-native'
     import FieldBase, { FieldBaseProps} from './FieldBase';
@@ -198,6 +208,8 @@ You can try entering some text into it to see that it works!
 
 If we added it to a Formik form though, at this point it wouldn't work - no data would be submitted. We have to integrate our component with Formik, like so:.
 
+`TextField.tsx` :
+
     import { useField } from 'formik';
 
     /* ... */
@@ -232,6 +244,8 @@ Right now if we tried to use this component in our app, we would receive an erro
 Now let's create a dropdown field component. For this component we will use the library *react-native-element-dropdown* that we installed in the Setup chapter.
 
 In the `components` folder, create a new file `DropdownField.tsx`:
+
+`DropdownField.tsx` :
 
     import { useField } from 'formik';
     import { Dropdown } from 'react-native-element-dropdown';
@@ -292,6 +306,8 @@ Finally let's create a `SliderField` component that will allow the user to input
 
 In the `components` folder, create a file `SliderField.tsx`:
 
+`SliderField.tsx` :
+
     import { useField } from 'formik';
     import { StyleSheet } from 'react-native'
     import FieldBase, { FieldBaseProps} from './FieldBase';
@@ -345,6 +361,8 @@ Okay, now that we've created our components, let's create a Formik form and hook
 
 To build our form, we will use Formik's `<Formik/>` and `<Form/>` components. First of all, let's add a foundation to our App component in `App.tsx`
 
+`App.tsx` :
+
     import { View, StyleSheet } from 'react-native'
 
     export default function App() {
@@ -368,6 +386,8 @@ Nothing much to see yet.
 
 Now, let's define our form's initial values
 
+`App.tsx` :
+
     /* ... */
 
     type FormValues = {
@@ -390,6 +410,8 @@ Now, let's define our form's initial values
 These will be the default values that will be set on the fields when the form loads/reloads. You can specify other values or even properties.
 
 Now let's add the `Formik` and `Form` components to the app:
+
+`App.tsx` :
 
     import { View, StyleSheet } from 'react-native'
     import { Formik, Form } from 'formik'; // +
@@ -417,6 +439,8 @@ Now let's add the `Formik` and `Form` components to the app:
 We have created our Formik component, which accepts an `initialValues` prop, which we specify as the `initialValues` variable that we created before. Additionally `Formik` accepts an `onSubmit` prop, which specifies which function to run when the form is submitted. We have made it so that the submitted values simply get logged into the console on submit.
 
 Now let's add our fields to the form.
+
+`App.tsx` :
 
     import { View, StyleSheet, Pressable, Text } from 'react-native'
     import { Formik, Form } from 'formik';
