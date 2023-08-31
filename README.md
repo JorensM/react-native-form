@@ -14,6 +14,7 @@ Do you want to create a form in your React Native app but don't know how? Then t
   2. Setup
   3. Building the components
   4. Building the form
+  5. Adding validation
   5. Adding accessibility
 
 ## Setup
@@ -195,4 +196,33 @@ Right now if we added the `TextField` to our app, it would look like this:
 
 You can try entering some text into it to see that it works!
 
-If we added it to a Formik form though, at this point it wouldn't work - no data would be submitted. We have to integrate our component with Formik.
+If we added it to a Formik form though, at this point it wouldn't work - no data would be submitted. We have to integrate our component with Formik, like so:.
+
+    import { useField } from 'formik';
+
+    /* ... */
+
+    const [ value, meta, helpers ] = useField(name)
+
+    const handleChange = (new_text: string) => {
+        helpers.setValue(new_text)
+    }
+
+    return (
+        <FieldBase
+            label={label}
+        >
+            <TextInput
+                style={styles.input}
+                onChangeText={handleChange}
+                value={meta.value}
+            />
+        </FieldBase>
+    )
+
+    /* ... */
+
+What we have done is made this component work with a Formik form. We did this by making the `onChangeText` handler update the input value stored in the Formik form.
+Now, if we added it to a form, entered a value and hit submit, the values would be passed to the Formik's `onSubmit` prop.
+
+Right now if we tried to use this component in our app, we would receive an error, because now the component expects to reside in a Formik form (which we are yet to build). But before we build our form, let's build the other 2 field components - `DropdownField` and `SliderField`
