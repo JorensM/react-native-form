@@ -503,11 +503,17 @@ Now let's add our fields to the form.
 
 Alright, we've added our fields to our form. We've also added a submit button and some style for the form and the button. If you try to submit the form, you will see the values logged to the console. Hooray! We've made our form!
 
+![](/images/form-1.PNG)
+
+![](/images/form-log.PNG)
+
 ## Adding validation
 
 The next step is to add validation to our fields. We will do this by using the library Yup, which Formik supports out of the box.
 
 First of all let's add an `ErrorMessage` component to our `FieldBase`. We will also need to add a `name` prop to our `FieldBase` that we can pass to the `ErrorMessage` so it know which field's error to display.
+
+`FieldBase.tsx` :
 
     import { ErrorMessage } from 'formik' // +
     import { PropsWithChildren } from 'react'
@@ -554,6 +560,8 @@ First of all let's add an `ErrorMessage` component to our `FieldBase`. We will a
 
 Next we have to update our `TextField`, `SliderField` and `DropdownField` to pass the `name` prop down to `FieldBase`, like so:
 
+`TextField.tsx` :
+
 export default function TextField({ 
     label,
     name
@@ -570,6 +578,47 @@ export default function TextField({
 
 The code above shows how to do it for `TextField`, but it's the same process for `SliderField` and `DropdownField`
 
-## Adding accessibility
+Now we have to add the validation schema to our Formik form:
 
-## Improving our code
+`App.tsx` :
+
+    import { View, StyleSheet, Pressable, Text } from 'react-native'
+    import { Formik, Form } from 'formik';
+    import * as Yup from 'yup';
+    import TextField from './components/TextField';
+    import DropdownField from './components/DropdownField';
+    import SliderField from './components/SliderField';
+
+    /* ... */
+
+    const validationSchema = Yup.object().shape({  // +
+        username: Yup.string()                     // +
+            .min(2, 'Too short!')                  // +
+            .max(16, 'Too long!')                  // +
+            .required('Required'),                 // +
+        profession: Yup.string()                   // +
+            .oneOf(['developer', 'cook', 'writer'], 'Invalid value')                                // +
+            .required('Required!'),                // +
+        coolness: Yup.number()                     // +
+            .min(0, 'Value must be between 0 and 100')// +
+            .max(100, 'Value must be between 0 and 100')// +
+            .required('Required!')// +
+    })
+
+    return (
+        <View style={styles.container}>
+        <Formik
+            initialValues={initialValues}
+            onSubmit={console.log}
+            validationSchema={validationSchema} // +
+        >
+    /* ... */
+
+Yay! We added validation to our form! Now try submitting the form with an empty username and you should see an error message pop up.
+
+![](/images/validation.PNG)
+
+And we're done with our Formik form!
+
+## Conclusion
+I hope you learned something new from this post. If you have any questions or comments feel free to leave them here, on the project repo or by emailing me at [jorensmerenjanu@gmail.com](mailto:jorensmerenjanu@gmail.com)

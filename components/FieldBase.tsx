@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
 export type FieldBaseProps = {
-    label: string
+    label: string,
     name: string
 }
 
